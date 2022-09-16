@@ -8,6 +8,9 @@ class c_Server:
     def __init__(self):
         self.Start(self.host,self.port)
 
+    #Start method for the socket server
+    #Listen for IOT Client to connect to the server
+    #If client connects, create new thread for the client
     def Start(self,host,port):
         ServerSocket = socket.socket()
         try:
@@ -24,12 +27,14 @@ class c_Server:
             if inp == "end":
                 return
         
+    #Accepts the connections if anyone connects
     def accept_connections(self, ServerSocket):
         while True:
             Client, address = ServerSocket.accept()
             print('Connected to: ' + address[0] + ':' + str(address[1]))
             start_new_thread(self.client_handler, (Client, ))
     
+    #Listens for input from IOT client
     def client_handler(self,connection: socket.socket):
         while True:
             try:
