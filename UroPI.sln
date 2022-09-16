@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "UroPI", "UroPI\UroPI.pyproj", "{5C26FCD8-CD32-4082-B6D8-99E91FB596D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C26FCD8-CD32-4082-B6D8-99E91FB596D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C26FCD8-CD32-4082-B6D8-99E91FB596D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {374261B2-0655-4D68-9190-DD0F94A8D268}
+	EndGlobalSection
+EndGlobal
