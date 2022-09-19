@@ -1,17 +1,27 @@
 import socket
 from _thread import *
+from ConfigParser import c_ConfigParser
+
 
 class c_Server:
+
+    parser : c_ConfigParser 
     host = '0.0.0.0'
     port = 1883
-
+  
+  
+  
     def __init__(self):
+        self.parser = c_ConfigParser()
+        self.host = self.parser.GetIp()
+        self.port = self.parser.GetPort()
         self.Start(self.host,self.port)
 
     #Start method for the socket server
     #Listen for IOT Client to connect to the server
     #If client connects, create new thread for the client
     def Start(self,host,port):
+        
         ServerSocket = socket.socket()
         try:
             ServerSocket.bind((host, port))
