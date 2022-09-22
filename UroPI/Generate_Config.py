@@ -5,24 +5,20 @@ config_file = configparser.ConfigParser()
 
 # ADD SECTION
 config_file.add_section("UroSettings")
+config_file.add_section("NetworkOptions")
 # ADD SETTINGS TO SECTION
 config_file.set("UroSettings", "ConnectionString", "0.0.0.0")
 config_file.set("UroSettings", "Port", "1883")
+config_file.set("NetworkOptions", "ssid", "ukendt")
+config_file.set("NetworkOptions", "psk", "Kode1234!")
 
-# SAVE CONFIG FILE
+
 with open(r"configurations.ini", 'w') as configfileObj:
     config_file.write(configfileObj)
     configfileObj.flush()
     configfileObj.close()
-
+    
 print("Config file 'configurations.ini' created")
-# ADD NEW SECTION AND SETTINGS
-config_file["Logger"]={
-        "LogFilePath":"<Path to log file>",
-        "LogFileName" : "<Name of log file>",
-        "LogLevel" : "Info"
-        }
-
 
 
 # PRINT FILE CONTENT

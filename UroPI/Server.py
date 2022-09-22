@@ -1,20 +1,21 @@
+import configparser
 import socket
 from _thread import *
-from ConfigParser import c_ConfigParser
+from ConfigManager import c_ConfigManager
 
 
 class c_Server:
 
-    parser : c_ConfigParser 
+    configManager : c_ConfigManager 
     host = '0.0.0.0'
     port = 1883
   
   
   
-    def __init__(self):
-        self.parser = c_ConfigParser()
-        self.host = self.parser.GetIp()
-        self.port = self.parser.GetPort()
+    def __init__(self, configManager : c_ConfigManager):
+        self.configManager = configManager
+        self.host = self.configManager.GetIp()
+        self.port = self.configManager.GetPort()
         self.Start(self.host,self.port)
 
     #Start method for the socket server
