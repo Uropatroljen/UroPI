@@ -6,17 +6,18 @@ from ConfigManager import c_ConfigManager
 
 class c_Server:
 
-    configManager : c_ConfigManager 
-    host = '0.0.0.0'
-    port = 1883
+    __configManager : c_ConfigManager 
+    __host = '0.0.0.0'
+    __port = 1883
   
   
   
     def __init__(self, configManager : c_ConfigManager):
-        self.configManager = configManager
-        self.host = self.configManager.GetIp()
-        self.port = self.configManager.GetPort()
-        self.Start(self.host,self.port)
+        #TODO Errorhandling
+        self.__configManager = configManager
+        self.__host = self.__configManager.GetIp()
+        self.__port = int(self.__configManager.GetPort())
+        self.Start(self.__host,self.__port)
 
     #Start method for the socket server
     #Listen for IOT Client to connect to the server

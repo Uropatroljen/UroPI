@@ -7,10 +7,10 @@ config_file = configparser.ConfigParser()
 config_file.add_section("UroSettings")
 config_file.add_section("NetworkOptions")
 # ADD SETTINGS TO SECTION
-config_file.set("UroSettings", "ConnectionString", "0.0.0.0")
-config_file.set("UroSettings", "Port", "1883")
-config_file.set("NetworkOptions", "ssid", "ukendt")
-config_file.set("NetworkOptions", "psk", "Kode1234!")
+config_file.set("uroSettings", "connectionString", "0.0.0.0")
+config_file.set("uroSettings", "port", "1883")
+config_file.set("networkOptions", "ssid", "ukendt")
+config_file.set("networkOptions", "psk", "Kode1234!")
 
 
 with open(r"configurations.ini", 'w') as configfileObj:

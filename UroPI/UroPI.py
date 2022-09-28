@@ -4,27 +4,28 @@ from NetworkUtils import c_NetworkUtils
 from ConfigManager import c_ConfigManager
 
 class c_UroPI:
-    configManager : c_ConfigManager
-
+    __configManager : c_ConfigManager
+    __NetUtils : c_NetworkUtils
+    
     def __init__(self) -> None:
-        self.configManager = c_ConfigManager()
+        self.__configManager = c_ConfigManager()
         self.Main()
 
 #This is or main file.
 #This file should be launched when attempting to turn on the program.    
     def Main(self):
         #Setup class with pass
-        NetUtils = c_NetworkUtils(self.configManager)
+        self.__NetUtils = c_NetworkUtils(self.__configManager)
         #Check if wifi is connect
-        if NetUtils.IsConnected() is False : 
+        if self.__NetUtils.IsConnected() is False : 
             #if not wifi connected create config
-            NetUtils.CreateWifiConfig()
+            self.__NetUtils.CreateWifiConfig()
             #reboot device after changes
-            self.Reboot()
+            self.__Reboot()
         #start server parse in the config file
-        server = c_Server(self.configManager)
+        server = c_Server(self.__configManager)
 
-    def Reboot(self):
+    def __Reboot(self):
         os.system('reboot')        
 
 c_UroPI()

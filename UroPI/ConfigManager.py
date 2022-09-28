@@ -3,31 +3,52 @@ import configparser
 
 class c_ConfigManager:
     
-    config : configparser    
+    __config : configparser    
         
     def __init__(self):
         #Set attribute of configparser
-        self.config = configparser.ConfigParser()
+        self.__config = configparser.ConfigParser()
         #Read the configuration file
-        self.config.read("configurations.ini")
+        self.__config.read("configurations.ini")
 
-    def GetIp(self) -> str :
-        """Get the ip from configuration file."""
-        return self.config["UroSettings"]["ConnectionString"]
-      
-    
-    def SetIp(self, ip : str):
-        """overwrite ipaddress in configuration file"""
-        #Set the connectionString value to given value
-        self.config.ConfigParser.set("UroSettings", "ConnectionString", ip)
-        #writing changes to configuration file, so next reboot contain new ip.
-        with open(r"configurations.ini", 'w') as configfileObj:
-            self.config.ConfigParser.write(configfileObj)
+    def __SaveConfig(self):
+          with open(r"configurations.ini", 'w') as configfileObj:
+            self.__config.ConfigParser.write(configfileObj)
             configfileObj.flush()
             configfileObj.close()
             print("Config file 'configurations.ini' created")
+        
+
+    def GetIp(self) -> str :
+        """Get the ip from configuration file."""
+        return self.__config["uroSettings"]["connectionString"]
+    
+    def GetSsid(self) -> str : 
+        """Get ssid from netwrok settings"""
+        return self.__config["networkOptions"]["ssid"]
+    
+    def GetPsk(self) -> str : 
+        """Get ssid from netwrok settings"""
+        return self.__config["networkOptions"]["psk"]
+    
+    def GetNetworkOptions(self) -> tuple :
+        """Get ssid and psk for network"""
+        return self.__config["networkOptions"]["ssid"], self.__config["networkOptions"]["psk"]
+  
+    def SetupNetwork(self, ssid : str, psk : int):
+        """Setup network configuration files"""
+        self.__config.ConfigParser.set("networkOptions", "ssid", ssid)
+        self.__config.ConfigParser.set("networkOptions", "psk", psk)
+        self.__SaveConfig()
+        
+    def SetIp(self, ip : str):
+        """overwrite ipaddress in configuration file"""
+        #Set the connectionString value to given value
+        self.__config.ConfigParser.set("uroSettings", "connectionString", ip)
+        #writing changes to configuration file, so next reboot contain new ip.
+        self.__SaveConfig(self)
     
     def GetPort(self) -> str:
         """Get port from configuration file as str"""
-        return int(self.config["UroSettings"]["Port"])
+        return int(self.__config["UroSettings"]["Port"])
         
