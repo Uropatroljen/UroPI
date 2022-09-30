@@ -21,7 +21,7 @@ class c_ConfigManager:
 
     def GetIp(self) -> str :
         """Get the ip from configuration file."""
-        return self.__config["uroSettings"]["connectionString"]
+        return self.__config["uroSettings"]["serverAddress"]
     
     def GetSsid(self) -> str : 
         """Get ssid from netwrok settings"""
@@ -33,7 +33,8 @@ class c_ConfigManager:
     
     def GetNetworkOptions(self) -> tuple :
         """Get ssid and psk for network"""
-        return self.__config["networkOptions"]["ssid"], self.__config["networkOptions"]["psk"]
+        tup = (self.__config["networkOptions"]["ssid"], self.__config["networkOptions"]["psk"])
+        return tup
   
     def SetupNetwork(self, ssid : str, psk : int):
         """Setup network configuration files"""
@@ -43,12 +44,12 @@ class c_ConfigManager:
         
     def SetIp(self, ip : str):
         """overwrite ipaddress in configuration file"""
-        #Set the connectionString value to given value
-        self.__config.ConfigParser.set("uroSettings", "connectionString", ip)
+        #Set the serverAddress value to given value
+        self.__config.ConfigParser.set("uroSettings", "serverAddress", ip)
         #writing changes to configuration file, so next reboot contain new ip.
         self.__SaveConfig(self)
     
     def GetPort(self) -> str:
         """Get port from configuration file as str"""
-        return int(self.__config["UroSettings"]["Port"])
+        return int(self.__config["uroSettings"]["Port"])
         

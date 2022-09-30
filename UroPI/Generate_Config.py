@@ -4,13 +4,16 @@ import configparser
 config_file = configparser.ConfigParser()
 
 # ADD SECTION
-config_file.add_section("UroSettings")
-config_file.add_section("NetworkOptions")
+config_file.add_section("uroSettings")
+config_file.add_section("networkOptions")
 # ADD SETTINGS TO SECTION
-config_file.set("uroSettings", "connectionString", "0.0.0.0")
+config_file.set("uroSettings", "serverAddress", "192.168.4.1")
 config_file.set("uroSettings", "port", "1883")
-config_file.set("networkOptions", "ssid", "ukendt")
-config_file.set("networkOptions", "psk", "Kode1234!")
+
+config_file.set("networkOptions", "wifi", "disable")
+config_file.set("networkOptions", "hotspot", "enable")
+config_file.set("networkOptions", "ssid", "")
+config_file.set("networkOptions", "psk", "")
 
 
 with open(r"configurations.ini", 'w') as configfileObj:

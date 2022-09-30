@@ -7,7 +7,7 @@ from ConfigManager import c_ConfigManager
 class c_Server:
 
     __configManager : c_ConfigManager 
-    __host = '0.0.0.0'
+    __host = ''
     __port = 1883
   
   
