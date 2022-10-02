@@ -1,9 +1,10 @@
 import configparser
+from operator import truediv
 
 
 class c_ConfigManager:
     
-    __config : configparser    
+    __config : configparser.ConfigParser 
         
     def __init__(self):
         #Set attribute of configparser
@@ -12,44 +13,94 @@ class c_ConfigManager:
         self.__config.read("configurations.ini")
 
     def __SaveConfig(self):
-          with open(r"configurations.ini", 'w') as configfileObj:
-            self.__config.ConfigParser.write(configfileObj)
-            configfileObj.flush()
-            configfileObj.close()
-            print("Config file 'configurations.ini' created")
-        
+        """Save the configurationFile"""
+        try:
+            with open(r"configurations.ini", 'w') as configfileObj:
+                self.__config.write(configfileObj)
+                configfileObj.flush()
+                configfileObj.close()
+                print("Config file 'configurations.ini' created")
+        except:
+            return None    
+    
+    def IsHotspotEnabled(self) -> bool :
+        """Return wifi or hotspot due to the settings in init"""
+        try:
+            return eval(self.__config["networkOptions"]["hotspot"])
+        except:
+            return None
+    def IsWifiEnabled(self) -> bool :
+        """Return wifi or hotspot due to the settings in init"""
+        try:
+            return eval(self.__config["networkOptions"]["wifi"])
+        except:
+            return None   
 
     def GetIp(self) -> str :
         """Get the ip from configuration file."""
-        return self.__config["uroSettings"]["serverAddress"]
-    
+        try:
+            return self.__config["uroSettings"]["serverAddress"]
+        except:
+            return None    
     def GetSsid(self) -> str : 
         """Get ssid from netwrok settings"""
-        return self.__config["networkOptions"]["ssid"]
-    
+        try:
+            return self.__config["networkOptions"]["ssid"]
+        except:
+            return None
+
     def GetPsk(self) -> str : 
         """Get ssid from netwrok settings"""
-        return self.__config["networkOptions"]["psk"]
+        try:
+            return self.__config["networkOptions"]["psk"]
+        except:
+            return None
     
-    def GetNetworkOptions(self) -> tuple :
+    def GetWifiSetup(self) -> tuple :
         """Get ssid and psk for network"""
-        tup = (self.__config["networkOptions"]["ssid"], self.__config["networkOptions"]["psk"])
-        return tup
-  
+        try:
+            tup = (self.__config["networkOptions"]["ssid"], self.__config["networkOptions"]["psk"])
+            return tup
+        except:
+            return None
     def SetupNetwork(self, ssid : str, psk : int):
         """Setup network configuration files"""
-        self.__config.ConfigParser.set("networkOptions", "ssid", ssid)
-        self.__config.ConfigParser.set("networkOptions", "psk", psk)
-        self.__SaveConfig()
-        
+        try:
+            self.__config["networkOptions"]["ssid"]= ssid
+            self.__config["networkOptions"]["psk"] = psk
+            self.__SaveConfig()
+        except:
+            return None
+
     def SetIp(self, ip : str):
         """overwrite ipaddress in configuration file"""
-        #Set the serverAddress value to given value
-        self.__config.ConfigParser.set("uroSettings", "serverAddress", ip)
-        #writing changes to configuration file, so next reboot contain new ip.
-        self.__SaveConfig(self)
-    
+        try:
+            #Set the serverAddress value to given value
+            self.__config["uroSettings"]["serverAddress"] = ip
+            #writing changes to configuration file, so next reboot contain new ip.
+            self.__SaveConfig()
+            return True
+        except:
+            return False
+    def SetNetworkConnection(self, num : int, enable : bool):
+        """0 hotspot, 1 wifi, set the startup configuration 0 = hotspot,  enable = true/false """
+        try:
+            if num is 0:
+                self.__config["networkSettings"]["wifi"] = str(not enable)
+                self.__config["networkSettings"]["hotspot"] = str(enable)
+                self.__SaveConfig()
+            elif num is 1:
+                self.__config["networkSettings"]["hotspot"] = str(not enable)
+                self.__config["networkSettings"]["wifi"] = str(enable)
+                self.__SaveConfig()
+            
+            return True
+        except:
+            return None
+
     def GetPort(self) -> str:
-        """Get port from configuration file as str"""
-        return int(self.__config["uroSettings"]["Port"])
-        
+        try:
+            """Get port from configuration file as str"""
+            return int(self.__config["uroSettings"]["Port"])
+        except:
+            return None        
