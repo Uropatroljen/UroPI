@@ -21,7 +21,33 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera.py" />
+    <Compile Include="CommandHandler.py" />
+    <Compile Include="ConfigManager.py" />
+    <Compile Include="Generate_Config.py" />
+    <Compile Include="NetworkUtils.py" />
+    <Compile Include="ProtoBufHelper.py" />
+    <Compile Include="Server.py" />
+    <Compile Include="Unit_Test.py" />
+    <Compile Include="UroCommand_pb2.py" />
     <Compile Include="UroPI.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".vscode\settings.json" />
+    <Content Include="configurations.ini" />
+    <Content Include="UroCommand_pb2.pyi" />
+    <Content Include="__pycache__\CommandHandler.cpython-310.pyc" />
+    <Content Include="__pycache__\ConfigManager.cpython-310.pyc" />
+    <Content Include="__pycache__\Generate_Config.cpython-310.pyc" />
+    <Content Include="__pycache__\NetworkUtils.cpython-310.pyc" />
+    <Content Include="__pycache__\ProtoBufHelper.cpython-310.pyc" />
+    <Content Include="__pycache__\Server.cpython-310.pyc" />
+    <Content Include="__pycache__\UroCommand_pb2.cpython-310.pyc" />
+    <Content Include="__pycache__\UroPI.cpython-310.pyc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vscode\" />
+    <Folder Include="__pycache__\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
