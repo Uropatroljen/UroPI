@@ -3,6 +3,7 @@ from sqlite3 import connect
 from Server import c_Server
 from NetworkUtils import c_NetworkUtils
 from ConfigManager import c_ConfigManager
+from Generate_Config import c_Generate_Config
 
 class c_UroPI:
     __configManager : c_ConfigManager
@@ -17,16 +18,32 @@ class c_UroPI:
     def Main(self):
         #Setup network utils parsing config manager.
         self.__NetUtils = c_NetworkUtils(self.__configManager)
-        #Get Network setup
-        networkOptions = self.__configManager.GetNetworkOptions()
-        #If network ssid and psk is not set, start hotspot.
-        if networkOptions[0] == "" and networkOptions[1] == "" :
-            self.__NetUtils.StartHostpot() 
-        #else connect to wifi
-        elif self.__NetUtils.ConnectToWifi is None :
-            self.__Reboot
+        hotspot = self.__configManager.IsHotspotEnabled()
+        wifi = self.__configManager.IsWifiEnabled()
+
+        #if hotspot and wifi is False, start up hotspot configuration.
+        if hotspot and wifi == False : 
+            self.__NetUtils.StartHostpot()
+        # if hotspot is false and wifi is true run wifi setup
+        elif hotspot == False and wifi == True:
+            #Get tuple of wifi configuration index 0 ip, index 1 psw
+            wifiSetup = self.__configManager.GetWifiSetup()
+            if wifiSetup is None:
+                self.__NetUtils.StartHostpot()
+            #check if both is str
+            if wifiSetup[0] and wifiSetup[1] is str:
+                #connect to wifi 
+                if self.__NetUtils.ConnectToWifi() is None :
+                    self.__Reboot()
+
+        if self.__configManager.GetIp() is None :
+            c_Generate_Config().CreateConfig()
+            self.__Reboot()
+        else :
+            server = c_Server(self.__configManager)
+        
+
             
-        server = c_Server(self.__configManager)
 
     def __Reboot(self):
         os.system('reboot')        
