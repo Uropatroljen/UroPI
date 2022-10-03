@@ -15,28 +15,28 @@ class c_NetworkUtils :
         self.__configMan = configReader
         
     #Method for creating wifi configuration file
-    def CreateWifiConfig(self):
-        #setting up file contents
-        config_lines = [
-            'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev',
-            'update_config=1',
-            'country=DK',
-            '\n',
-            'network={',
-            '\tssid=\"' + self.configParse.config["NetworkOptions"]["ssid"] + "\"",
-            '\tpsk=\"'+ self.configParse.config["NetworkOptions"]["psk"] + "\"",
-            '}'
-            ]
-        config = '\n'.join(config_lines)
-        #display additions
-        print(config)
-        #give access and writing. may have to do this manually beforehand
-        os.popen("sudo chmod a+w /etc/wpa_supplicant/wpa_supplicant.conf")
-        #writing to file
-        with open("/etc/wpa_supplicant/wpa_supplicant.conf", "w") as wifi:
-            wifi.write(config)
-        #displaying success
-        print("wifi config added")
+    # def CreateWifiConfig(self):
+    #     #setting up file contents
+    #     config_lines = [
+    #         'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev',
+    #         'update_config=1',
+    #         'country=DK',
+    #         '\n',
+    #         'network={',
+    #         '\tssid=\"' + self.configParse.config["NetworkOptions"]["ssid"] + "\"",
+    #         '\tpsk=\"'+ self.configParse.config["NetworkOptions"]["psk"] + "\"",
+    #         '}'
+    #         ]
+    #     config = '\n'.join(config_lines)
+    #     #display additions
+    #     print(config)
+    #     #give access and writing. may have to do this manually beforehand
+    #     os.popen("sudo chmod a+w /etc/wpa_supplicant/wpa_supplicant.conf")
+    #     #writing to file
+    #     with open("/etc/wpa_supplicant/wpa_supplicant.conf", "w") as wifi:
+    #         wifi.write(config)
+    #     #displaying success
+    #     print("wifi config added")
  
     def ConnectToWifi(self):
         """By terminal connect to wifi with configuration files"""

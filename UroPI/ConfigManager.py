@@ -39,6 +39,7 @@ class c_ConfigManager:
     def GetIp(self) -> str :
         """Get the ip from configuration file."""
         try:
+            self.__config.set
             return self.__config["uroSettings"]["serverAddress"]
         except:
             return None    
