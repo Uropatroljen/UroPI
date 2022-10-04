@@ -4,6 +4,7 @@ from ConfigManager import c_ConfigManager
 from ProtoBufHelper import c_ProtoBuf
 import hashlib
 from CommandHandler import c_CommandHandler
+import UroCommand_pb2 as uro
 
 class c_Server:
     commandHandler = c_CommandHandler()
@@ -51,13 +52,22 @@ class c_Server:
     
     #Listens for input from IOT client
     def client_handler(self,connection: socket.socket):
+        c = uro.Command()
+        c.command = "Party time"
+        c.music.id = 0
+        c.music.title = "Party all night"
         while True:
             try:
                 data = connection.recv(2048)
+                #if(data != None):
+                 #   print(data)
+                #    connection.send(c.SerializePartialToString())
+                    #connection.close()
                 #temp = data.decode('utf-8')
-                #if(temp == hashlib.sha256(self.modelNumber.encode('utf-8')).hexdigest()):
+                #if(temp == hashlib.sha256(self.modelNum ber.encode('utf-8')).hexdigest()):
                     #TODO Send acknowlagement to app
                     #print("Match")
+                print(data)
                 self.commandHandler.CommandRunner(data)
             except:
                 #Kill thread

@@ -13,16 +13,20 @@ class Client(_message.Message):
     def __init__(self, token: _Optional[str] = ..., imei: _Optional[str] = ...) -> None: ...
 
 class Command(_message.Message):
-    __slots__ = ["client", "command", "light", "music"]
+    __slots__ = ["client", "command", "light", "music", "network", "uro"]
     CLIENT_FIELD_NUMBER: _ClassVar[int]
     COMMAND_FIELD_NUMBER: _ClassVar[int]
     LIGHT_FIELD_NUMBER: _ClassVar[int]
     MUSIC_FIELD_NUMBER: _ClassVar[int]
+    NETWORK_FIELD_NUMBER: _ClassVar[int]
+    URO_FIELD_NUMBER: _ClassVar[int]
     client: Client
     command: str
     light: Light
     music: Music
-    def __init__(self, command: _Optional[str] = ..., client: _Optional[_Union[Client, _Mapping]] = ..., music: _Optional[_Union[Music, _Mapping]] = ..., light: _Optional[_Union[Light, _Mapping]] = ...) -> None: ...
+    network: NetworkCre
+    uro: Uro
+    def __init__(self, command: _Optional[str] = ..., client: _Optional[_Union[Client, _Mapping]] = ..., music: _Optional[_Union[Music, _Mapping]] = ..., light: _Optional[_Union[Light, _Mapping]] = ..., uro: _Optional[_Union[Uro, _Mapping]] = ..., network: _Optional[_Union[NetworkCre, _Mapping]] = ...) -> None: ...
 
 class Light(_message.Message):
     __slots__ = ["blue", "green", "red", "state"]
@@ -43,3 +47,16 @@ class Music(_message.Message):
     id: int
     title: str
     def __init__(self, id: _Optional[int] = ..., title: _Optional[str] = ...) -> None: ...
+
+class NetworkCre(_message.Message):
+    __slots__ = ["ssid"]
+    PASS_FIELD_NUMBER: _ClassVar[int]
+    SSID_FIELD_NUMBER: _ClassVar[int]
+    ssid: str
+    def __init__(self, ssid: _Optional[str] = ..., **kwargs) -> None: ...
+
+class Uro(_message.Message):
+    __slots__ = ["model"]
+    MODEL_FIELD_NUMBER: _ClassVar[int]
+    model: str
+    def __init__(self, model: _Optional[str] = ...) -> None: ...
