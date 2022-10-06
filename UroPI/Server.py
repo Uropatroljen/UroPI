@@ -1,23 +1,14 @@
 import socket
 from _thread import *
-from ConfigManager import c_ConfigManager
-from ProtoBufHelper import c_ProtoBuf
-import hashlib
 from CommandHandler import c_CommandHandler
 
 class c_Server:
     commandHandler = c_CommandHandler()
-    __configManager : c_ConfigManager 
-    __host = ''
-    __port = 1883
-  
-    def __init__(self, configManager : c_ConfigManager):
-        #TODO Errorhandling
-        self.__configManager = configManager
-        self.__host = self.__configManager.GetIp()
-        self.__port = int(self.__configManager.GetPort())
-        self.Start(self.__host,self.__port)
+    modelNumber = "SAS9"
 
+    def __init__(self,host:str,port:int):
+        self.Start(host,port)
+  
     #Start method for the socket server
     #Listen for IOT Client to connect to the server
     #If client connects, create new thread for the client
@@ -57,4 +48,5 @@ class c_Server:
     def __SendMessage(self,connection: socket.socket,message: bytes):
         """send message to socket client"""
         connection.send(message)
-      
+              connection.send(message)
+        connection.close()

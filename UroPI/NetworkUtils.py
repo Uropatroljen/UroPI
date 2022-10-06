@@ -13,17 +13,19 @@ class c_NetworkUtils :
     #constructor with c_ConfigManager as paramater
     def __init__(self, configReader : c_ConfigManager):
         self.__configMan = configReader
-    
+
     def ConnectToWifi(self):
         """By terminal connect to wifi with configuration files"""
         #connecting to wifi
-        os.system("nmcli device wifi connect\""+self.__configMan.GetSsid+"\" password \""+self.__configMan.GetPsk+"\"")
+        os.system("nmcli device wifi connect{} password \"{}\"".format(self.__configMan.GetSsid(), self.__configMan.GetPsk()))
         #sleeping before getting our ipv4 address
-        sleep(2)
+        sleep(2000)
         if(self.__connectionFails >= 10):
+            self.__connectionFails = 0
             return None
         #check if we got an ipv4 address
         if self.get_ip_address() is str :
+            self.__connectionFails = 0
             return self.get_ip_address()
         #try to reconnect if not
         else:
