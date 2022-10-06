@@ -22,7 +22,7 @@ class c_UroPI:
         wifi = self.__configManager.IsWifiEnabled()
 
         #if hotspot and wifi is False, start up hotspot configuration.
-        if hotspot and wifi == False : 
+        if hotspot == False and wifi == False : 
             self.__NetUtils.StartHostpot()
         # if hotspot is false and wifi is true run wifi setup
         elif hotspot == False and wifi == True:
@@ -31,7 +31,7 @@ class c_UroPI:
             if wifiSetup is None:
                 self.__NetUtils.StartHostpot()
             #check if both is str
-            if wifiSetup[0] and wifiSetup[1] is str:
+            if wifiSetup[0] is not None and wifiSetup[1] is not None:
                 #connect to wifi 
                 if self.__NetUtils.ConnectToWifi() is None :
                     self.__Reboot()

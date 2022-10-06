@@ -13,37 +13,13 @@ class c_NetworkUtils :
     #constructor with c_ConfigManager as paramater
     def __init__(self, configReader : c_ConfigManager):
         self.__configMan = configReader
-        
-    #Method for creating wifi configuration file
-    # def CreateWifiConfig(self):
-    #     #setting up file contents
-    #     config_lines = [
-    #         'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev',
-    #         'update_config=1',
-    #         'country=DK',
-    #         '\n',
-    #         'network={',
-    #         '\tssid=\"' + self.configParse.config["NetworkOptions"]["ssid"] + "\"",
-    #         '\tpsk=\"'+ self.configParse.config["NetworkOptions"]["psk"] + "\"",
-    #         '}'
-    #         ]
-    #     config = '\n'.join(config_lines)
-    #     #display additions
-    #     print(config)
-    #     #give access and writing. may have to do this manually beforehand
-    #     os.popen("sudo chmod a+w /etc/wpa_supplicant/wpa_supplicant.conf")
-    #     #writing to file
-    #     with open("/etc/wpa_supplicant/wpa_supplicant.conf", "w") as wifi:
-    #         wifi.write(config)
-    #     #displaying success
-    #     print("wifi config added")
- 
+    
     def ConnectToWifi(self):
         """By terminal connect to wifi with configuration files"""
         #connecting to wifi
         os.system("nmcli device wifi connect\""+self.__configMan.GetSsid+"\" password \""+self.__configMan.GetPsk+"\"")
         #sleeping before getting our ipv4 address
-        sleep(2000)
+        sleep(2)
         if(self.__connectionFails >= 10):
             return None
         #check if we got an ipv4 address
@@ -57,23 +33,15 @@ class c_NetworkUtils :
     
     def StartHostpot(self):
         """Set up the hotspot configuration files and rebooting systemctl"""
-        os.system("sudo systemctl enable hostapd dnsmasq")
-        os.system("cat /etc/dhcpcd.conf.hotspot | sudo tee a /etc/dhcpcd.conf >/dev/null")
-        os.system("cat /etc/dnsmasq.conf.hotspot | sudo tee a /etc/dnsmasq.conf >/dev/null")
-        os.system("sudo service hostapd restart")
-        os.system("sudo service dnsmasq restart")
+        if self.__configMan.GetSsid() is not None:
+            os.system(f"nmcli con down id \"{self.__configMan.GetSsid()}\"")
+        os.system("nmcli con up hoturo")
         self.__configMan.SetNetworkConnection(0, True)
-        os.system("sudo reboot")
-
+        
     def DisableHotspot(self):
         """disable hotspot and set the original config files"""
-        os.system("sudo systemctl disable hostapd dnsmasq")
-        os.system("cat /etc/dhcpcd.conf.wifi | sudo tee a /etc/dhcpcd.conf >/dev/null")
-        os.system("cat /etc/dnsmasq.conf.wifi | sudo tee a /etc/dnsmasq.conf >/dev/null")
-        os.system("sudo service hostapd stop")
-        os.system("sudo service dnsmasq stop")
+        os.system("nmcli con down hoturo")
         self.__configMan.SetNetworkConnection(1, True)
-        os.system("sudo reboot")
       
     def get_ip_address(self) -> str:
         """Get ip address from INET (IPV4)"""
