@@ -22,13 +22,13 @@ class c_Generate_Config():
             self.config_file.set("networkOptions", "ssid", "")
             self.config_file.set("networkOptions", "psk", "")
 
-            with open(r"configurations.ini", 'w') as configfileObj:
+            with open(r"UroPI\configurations.ini", 'w') as configfileObj:
                 self.config_file.write(configfileObj)
                 configfileObj.flush()
                 configfileObj.close()
             print("Config file 'configurations.ini' created")
             # PRINT FILE CONTENT
-            read_file = open("configurations.ini", "r")
+            read_file = open("UroPI\configurations.ini", "r")
             content = read_file.read()
             print("Content of the config file are:\n")
             print(content)

@@ -49,11 +49,12 @@ class Music(_message.Message):
     def __init__(self, id: _Optional[int] = ..., title: _Optional[str] = ...) -> None: ...
 
 class NetworkCre(_message.Message):
-    __slots__ = ["ssid"]
-    PASS_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["psw", "ssid"]
+    PSW_FIELD_NUMBER: _ClassVar[int]
     SSID_FIELD_NUMBER: _ClassVar[int]
+    psw: str
     ssid: str
-    def __init__(self, ssid: _Optional[str] = ..., **kwargs) -> None: ...
+    def __init__(self, ssid: _Optional[str] = ..., psw: _Optional[str] = ...) -> None: ...
 
 class Uro(_message.Message):
     __slots__ = ["model"]

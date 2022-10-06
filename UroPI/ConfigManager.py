@@ -64,6 +64,7 @@ class c_ConfigManager:
             return tup
         except:
             return None
+            
     def SetupNetwork(self, ssid : str, psk : int):
         """Setup network configuration files"""
         try:
