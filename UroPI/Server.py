@@ -13,7 +13,6 @@ class c_Server:
     #Listen for IOT Client to connect to the server
     #If client connects, create new thread for the client
     def Start(self,host,port):
-        
         ServerSocket = socket.socket()
         try:
             ServerSocket.bind((host, port))
@@ -41,12 +40,13 @@ class c_Server:
         while True:
             try:
                 data = connection.recv(2048)
-                print(data)
                 self.commandHandler.CommandRunner(data)
             except:
                 #Kill thread
                 return
-
-    #Send message to the client
-    def SendMessage(self,connection: socket.socket,message: bytes):
+    #Sending message to client
+    def __SendMessage(self,connection: socket.socket,message: bytes):
+        """send message to socket client"""
         connection.send(message)
+              connection.send(message)
+        connection.close()

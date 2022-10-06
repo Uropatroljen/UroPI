@@ -88,12 +88,12 @@ class c_ConfigManager:
         """0 hotspot, 1 wifi, set the startup configuration 0 = hotspot,  enable = true/false """
         try:
             if num is 0:
-                self.__config["networkSettings"]["wifi"] = str(not enable)
-                self.__config["networkSettings"]["hotspot"] = str(enable)
+                self.__config["networkOptions"]["wifi"] = str(not enable)
+                self.__config["networkOptions"]["hotspot"] = str(enable)
                 self.__SaveConfig()
             elif num is 1:
-                self.__config["networkSettings"]["hotspot"] = str(not enable)
-                self.__config["networkSettings"]["wifi"] = str(enable)
+                self.__config["networkOptions"]["hotspot"] = str(not enable)
+                self.__config["networkOptions"]["wifi"] = str(enable)
                 self.__SaveConfig()
             
             return True
