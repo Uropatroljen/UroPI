@@ -48,5 +48,4 @@ class c_Server:
     def __SendMessage(self,connection: socket.socket,message: bytes):
         """send message to socket client"""
         connection.send(message)
-              connection.send(message)
         connection.close()
